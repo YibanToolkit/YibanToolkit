@@ -424,10 +424,10 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 <p>  设置此选项后，将统计完成的用户个数，超出的用户被忽略</p></li>
 <li><p><code>--override-delay-min  &lt;time&gt;</code></p>
 
-<p>  此选项仅这次 auto-delay-time-min 配置</p></li>
+<p>  此选项仅这次覆盖 auto-delay-time-min 配置</p></li>
 <li><p><code>--override-delay-max  &lt;time&gt;</code></p>
 
-<p>  此选项仅这次 auto-delay-time-max 配置</p></li>
+<p>  此选项仅这次覆盖 auto-delay-time-max 配置</p></li>
 <li><p><code>-r, --random</code></p>
 
 <p>  此选项生成一个随机序列，并保存到数据库中，在再次执行此操作之前，序列保持不变</p>
@@ -443,6 +443,19 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 <p>  使用此选项时输入后续参数将被忽略</p></li>
 </ul>
 
+
+<p>auto 命令的格式如下</p>
+
+<pre><code>$ yiban auto [选项] [&lt;协议名&gt; &lt;参数&gt;]
+</code></pre>
+
+<p>协议名是指你想批量完成的动作，例如 <code>act-vote</code> 投票，任何上述“基础 Yiban 协议”都可以</p>
+
+<p>参数指对应协议的命令的第2个参数及之后的参数，第一个参数用户名由 <code>auto</code> 自己管理</p>
+
+<p>几个例子</p>
+
+<p>未完待续</p>
 
 <h2>ybvotefmt 工具</h2>
 
