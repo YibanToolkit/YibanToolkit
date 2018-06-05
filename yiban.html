@@ -166,7 +166,7 @@ $ . setup_env
 
 <p>我们正在移植，但遇到了太多麻烦，Windows 缺乏太多 YibanToolkit 运行必要的特性，并且 Windows 自己本身无数的 Bug 导致 YibanToolkit 难以正常工作。</p>
 
-<p>请注意，这是一个我们的开发者团队中少数人的业余爱好，此版本不受我们官方支持，并且可能随时移除。</p>
+<p>请注意，这是一个我们的开发者团队中少数人的业余爱好，此版本不受我们官方支持，并且可能随时被移除。</p>
 
 <h2>用法</h2>
 
@@ -518,7 +518,7 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 
 <p>全部成员，非乱序，完成指定投票，按照比例选取不同的回答</p>
 
-<pre><code>$ yiban auto act-vote AAAAAA,BBBBBBBB,12345675,2,5 'select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
+<pre><code>$ yiban auto act-vote AAAAAA,BBBBBBBB,12345675,2,5 '!select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
 </code></pre>
 
 <p>生成随机乱序</p>
@@ -528,12 +528,12 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 
 <p>全部成员，使用之前生成的乱序，完成指定投票，按照比例选取不同的回答</p>
 
-<pre><code>$ yiban auto --use-order act-vote AAAAAA,BBBBBBBB,12345675,2,5 'select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
+<pre><code>$ yiban auto --use-order act-vote AAAAAA,BBBBBBBB,12345675,2,5 '!select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
 </code></pre>
 
 <p>全部成员，使用之前生成的乱序，从用户 12345699874 开始，只投 10 个人，完成指定投票，按照比例选取不同的回答</p>
 
-<pre><code>$ yiban auto --use-order -s 12345699874 -n 10 act-vote AAAAAA,BBBBBBBB,12345675,2,5 'select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
+<pre><code>$ yiban auto --use-order -s 12345699874 -n 10 act-vote AAAAAA,BBBBBBBB,12345675,2,5 '!select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
 </code></pre>
 
 <p>全部成员，使用之前生成的乱序，在 master 组中发布话题，讨论保存在文件 1.txt 中</p>
@@ -543,14 +543,106 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 
 <p>全部成员，使用之前生成的乱序，本次忽略设置，将等待时间临时设置为 5-10s，在 master 组中发布话题，讨论保存在文件 a.txt 和 b.txt 中，并预计发布 a.txt 和 b.txt 话题的人比例为 1:2</p>
 
-<pre><code>$ yiban auto --use-order --override-delay-min 5 --override-delay-max 10 topic master 'select{a.txt:1;b.txt:2}'
+<pre><code>$ yiban auto --use-order --override-delay-min 5 --override-delay-max 10 topic master '!select{a.txt:1;b.txt:2}'
 </code></pre>
 
 <h2>ybvotefmt 工具</h2>
 
-<p>未完待续</p>
+<p>用户在批量完成投票时可能经常使用 <code>!select{}</code> 宏，但是不想手写，则可以使用 <code>ybvotefmt</code> 工具来辅助完成一些枯燥的事情</p>
+
+<p>此工具的正确用法为</p>
+
+<pre><code>$ yiban cat-vote &lt;用户名 或 master&gt; &lt;投票 ID&gt; | ybvotefmt
+== number of votes: 11, must select number: 2 to 6
+== create selections by No.,No....&lt;space&gt;rote and end with ENTER
+== a blank selection will stop input
+&gt;&gt; 
+</code></pre>
+
+<p>工具很人性化的输出了投票可供选择的总数为 11, 最少选 2 想，最多选 6 想。</p>
+
+<p>然后你只需要按照提示操作，即，使用格式 <code>序号,序号,... &lt;空格&gt; 比例</code> 的形式写出你希望的一个选择，然后回车，重复此步骤然后一个空行表示结束。</p>
+
+<p>例如，你希望有三个组，第一组选择第 1,2,3 项，第二组选第 2,5,8 项，第三组选第 1,4,7,10 项，比例为 1:3:2，于是你这样输入</p>
+
+<pre><code>&gt;&gt; 1,2,3 1
+&gt;&gt; 2,5,8 3
+&gt;&gt; 1,4,7,10 2
+&gt;&gt; 
+</code></pre>
+
+<p>随后，ybvotefmt 工具将自动为你输出宏命令</p>
+
+<pre><code>'!select{88123420,88123422,88123424:1;88123422,88123428,88123434:3;88123420,88123426,88123432,88123438:2}'
+</code></pre>
 
 <h2>ybfirstvote 工具</h2>
+
+<p>此工具用于帮助你快速找到第一页上某个投票的 ID</p>
+
+<p>工具用法</p>
+
+<pre><code>$ ybfirstvote [-a|--actid] [-s|--skip &lt;number&gt;] &lt;username&gt; &lt;groupids&gt;
+</code></pre>
+
+<p>选项，此命令接受几个选项</p>
+
+<ul>
+<li><p><code>-a, --actid</code></p>
+
+<p>  要求输出投票的 有效ID，否则只输出投票 ID</p></li>
+<li><p><code>-s, --skip &lt;number&gt;</code></p>
+
+<p>  跨过几个投票，注意不支持跨页。默认为 0 表示不跨过任何投票</p></li>
+</ul>
+
+
+<p>输出 master 用户，master 组的最新一个投票的 ID</p>
+
+<pre><code>$ ybfirstvote master master
+AAAAAA,BBBBBBBB,12345671
+</code></pre>
+
+<p>输出 master 用户，master 组的第 5 个投票的 ID</p>
+
+<pre><code>$ ybfirstvote --skip 4 master master
+AAAAAA,BBBBBBBB,12345675
+</code></pre>
+
+<p>取得 master 用户，master 组的第 5 个投票的 ID，并直接用这个 ID 来获取投票详情</p>
+
+<pre><code>$ yiban cat-vote master `ybfirstvote --skip 4 master master`
+200 操作成功
+
+有哪些食堂的饭让你看一眼就知道吃起来很香？
+
+
+Min: 2, Max: 5, Number: 6
+act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
+---
+
+84354750 饼
+84354752 面
+84354753 哈哈哈
+84354758 哈哈哈哈哈哈
+84354759 鸡蛋
+84354760 菜 
+</code></pre>
+
+<p>取得 master 用户，master 组的第 5 个投票的 ID，并直接用这个 ID 来获取投票详情，再用 ybvotefmt 工具生成宏</p>
+
+<pre><code>$ yiban cat-vote master `ybfirstvote --skip 4 master master` | ybvotefmt
+</code></pre>
+
+<p>输出 master 用户，master 组的第 5 个投票的有效 ID</p>
+
+<pre><code>$ ybfirstvote --skip 4 -a master master
+AAAAAA,BBBBBBBB,12345675,2,5
+</code></pre>
+
+<p><strong>你会发现，把这些工具(ybvotefmt, ybfirstvote, auto, select macro)结合在一起用，就能实现各种需要，方便各种需求！</strong></p>
+
+<h2>常见问题解答 (FAQ)</h2>
 
 <p>未完待续</p>
 </div>
