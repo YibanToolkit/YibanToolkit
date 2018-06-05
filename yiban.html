@@ -7,11 +7,39 @@
 
 	<link href="style/main.css" rel="stylesheet">
 	<style>
+a {
+	color: #08c;
+	text-decoration: none;
+	outline: 0;
+}
+
+a:hover {
+	color: #005580;
+	text-decoration: none;
+	outline: 0;
+}
+
+a:hover,
+a:active {
+	outline: 0;
+}
+
+a:focus {
+	outline: 0;
+}
+
 		body {
 			margin: 40px;
 			font-family: sans-serif;
 			padding-left: 120px;
 			padding-right: 120px;
+			background-color: #fdfdfd;
+		}
+
+		#wrapper {
+			max-width: 1200px;
+			margin-right: auto;
+			margin-left: auto;
 		}
 		
 		p {
@@ -20,18 +48,22 @@
 
 		pre {
 			padding: 10px;
-			background-color: #eaeaea;
+			background-color: #eef;
+			border: 1px solid #e8e8e8;
 			overflow: auto;
+			font-size: 14px;
 		}
 
 		p>code {
-			background-color: #eaeaea;
+			background-color: #eef;
 			padding: 4px;
+			font-size: 14px;
 		}
 
 		:not(pre)>code {
-			background-color: #eaeaea;
+			background-color: #eef;
 			padding: 4px;
+			font-size: 14px;
 		}
 
 		blockquote {
@@ -52,7 +84,7 @@
 			padding: 8px;
 			border-style: solid;
 			border-color: #464646;
-			background-color: #eaeaea;
+			background-color: #eef;
 		}
 
 		table td {
@@ -63,18 +95,18 @@
 			background-color: #ffffff;
 		}
 
-		@media (max-width: 750px) {
+		@media (max-width: 1000px) {
 			body {
 				margin: 10px;
 				padding-left: 0px;
 				padding-right: 0px;
 			}
 		}
-
 	</style>
 </head>
 
 <body>
+<div id="wrapper">
 <h1>YiBanToolkit 使用手册</h1>
 
 <h2>安装</h2>
@@ -488,5 +520,6 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 <h2>ybfirstvote 工具</h2>
 
 <p>未完待续</p>
+</div>
 </body>
 </html>
