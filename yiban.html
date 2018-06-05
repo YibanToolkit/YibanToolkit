@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link href="style/main.css" rel="stylesheet">
+	<style>
+		body {
+			margin: 40px;
+			font-family: sans-serif;
+			padding-left: 120px;
+			padding-right: 120px;
+		}
+		
+		p {
+			word-wrap: break-word;
+		}
+
+		pre {
+			padding: 10px;
+			background-color: #eaeaea;
+			overflow: auto;
+		}
+
+		p>code {
+			background-color: #eaeaea;
+			padding: 4px;
+		}
+
+		:not(pre)>code {
+			background-color: #eaeaea;
+			padding: 4px;
+		}
+
+		blockquote {
+			margin-left: 10px;
+			border-left: 5px solid #afafaf;
+			padding-left: 10px;
+			color: #464646;
+		}
+
+		table {
+			border-width: 1px;
+			border-color: #464646;
+			border-collapse: collapse;
+		}
+
+		table th {
+			border-width: 1px;
+			padding: 8px;
+			border-style: solid;
+			border-color: #464646;
+			background-color: #eaeaea;
+		}
+
+		table td {
+			border-width: 1px;
+			padding: 8px;
+			border-style: solid;
+			border-color: #464646;
+			background-color: #ffffff;
+		}
+
+		@media (max-width: 750px) {
+			body {
+				margin: 10px;
+				padding-left: 0px;
+				padding-right: 0px;
+			}
+		}
+
+	</style>
+</head>
+
+<body>
+<h1>YiBanToolkit 使用手册</h1>
+
+<h2>安装</h2>
+
+<h3>安装 Google Chrome 或者 Chromium Browser</h3>
+
+<p>方法1: 从你的发行版软件源安装 Chromium Browser</p>
+
+<p>方法2: 访问 <a href="https://www.google.cn/chrome">Google 中国（可能较慢）</a> 或 <a href="https://www.google.com/chrome">Google（中国大陆无法访问）</a> 下载 Chrome 并安装</p>
+
+<h3>Linux 版本</h3>
+
+<p><img src="tux.png" alt="" /></p>
+
+<p>执行以下命令解压归档文件</p>
+
+<pre><code>$ tar xvf YibanToolkit-linux-amd64.tar.xz
+</code></pre>
+
+<p>对于大部分 Debian 系的系统，使用 <code>install-dep-debian.sh</code> 安装依赖的软件</p>
+
+<pre><code>$ cd YibanToolkit
+$ ./install-dep-debian.sh
+</code></pre>
+
+<p>对于非 Debian 系，你需要手动安装依赖的软件，包括但不限于 <code>coreutils openssl curl jshon sqlite3 python3-pip</code></p>
+
+<p>然后执行</p>
+
+<pre><code>$ pip3 install selenium
+</code></pre>
+
+<p>在开始使用之前，需要先包含 setup_env</p>
+
+<pre><code>$ cd YibanToolkit
+$ . setup_env
+</code></pre>
+
+<h3>Darwin（Mac OS X） 版本</h3>
+
+<p><img src="darwin.png" alt="" /></p>
+
+<blockquote><p>Darwin（Mac OS X） 版本是 Beta 版本，软件使用中可能出现各种未知问题，如果你希望使用稳定版本，并获得最新的 hotfix，请使用 Linux 版本</p>
+
+<p><del>Darwin（Mac OS X） 版本目前有一个已知严重的 json 解析 Bug</del> 此问题应该已经解决（并不需要更新系统库版本），如果再次遇到请反馈</p></blockquote>
+
+<p>在 finder 中解压 <code>YibanToolkit-darwin-amd64.zip</code> 然后将 YibanToolkit 拖入到应用程序目录中，就像安装其他的 OS X 应用程序一样。</p>
+
+<p>必须安装依赖软件，Lanchpad -> 工具 -> 终端，然后运行</p>
+
+<pre><code>$ pip3 install selenium
+</code></pre>
+
+<p>非 OS X 用户（其他的 Darwin 发行版本）也可以使用此版本，使用方法参照 Linux 版本。</p>
+
+<h3>Microsoft Windows 版本</h3>
+
+<p>我们正在移植，但遇到了太多麻烦，Windows 缺乏太多 YibanToolkit 运行必要的特性，并且 Windows 自己本身无数的 Bug 导致 YibanToolkit 难以正常工作。</p>
+
+<p>请注意，这是一个我们的开发者团队中少数人的业余爱好，此版本不受我们官方支持，并且可能随时移除。</p>
+
+<h2>用法</h2>
+
+<h3>显示帮助信息</h3>
+
+<pre><code>$ yiban help
+usage: yiban [COMMAND]
+
+BASIC
+    dbinit        initializa database
+    config     &lt;key&gt; &lt;value&gt;
+                  set config key to value
+    ls-config     list all config
+    add        &lt;username&gt; &lt;password&gt;
+                  add a account to database
+    del        &lt;username&gt;
+                  delete a account
+    chpw       &lt;username&gt; &lt;password&gt;
+                  change a account password
+    list          list all accounts
+    login      &lt;username&gt;
+                  login account by username
+    login-all     login all accounts
+    login-need    login accounts which marked by need-update
+    mark       &lt;username&gt; &lt;flag&gt;
+                  mark a account flag
+    test          test all account by checkin them and mark
+    help          show this usage
+
+PROTOCOLS
+    checkin    &lt;username&gt;
+                  checkin a account (can not choose answer)
+    ls-group   &lt;username|master&gt;
+                  list groups of a account or master account
+    ls-vote    &lt;username|master&gt; &lt;groupid|master&gt; [page=1]
+                  list votes of a account of a group
+    cat-vote   &lt;username|master&gt; &lt;voteids&gt;
+                  get details of a vote, voteids from ls-vote
+    act-vote   &lt;username|master&gt; &lt;act-voteids&gt; &lt;optids&gt;
+                  act a vote, act-voteids from cat-vote
+    topic      &lt;username|master&gt; &lt;groupid|master&gt; &lt;file&gt;
+                  add a topic to a group, title and content from file
+
+AUTO
+    auto       [OPTIONS] [&lt;prot name&gt; &lt;args&gt;]
+                  auto run protocol all accounts
+                  args are the args without username
+                  args by ratio (once only one arg):
+                     '!select{value1:ratio;value2:ratio...}'
+                  args by alias (once only one arg):
+                     '!alias{aliasname}'
+                  args by check flag (once only one arg):
+                     '!ifmark{value1:[!]flag1;value2:[!]flag2...}'
+               -s, --begin-account   &lt;username&gt;  set begin account
+               -n, --number-account  &lt;num&gt;       set number of accounts
+               --override-delay-min  &lt;time&gt;
+                                     override auto-delay-time-min config
+               --override-delay-max  &lt;time&gt;
+                                     override auto-delay-time-max config
+               -r, --random          random a order and save it
+               --use-order           use the saved random order for auto
+               --dump-order          dump current order by saved random
+
+CONFIGS
+    master-account         The username for master account
+    master-group           The 'groupid,puid' for master group
+    auto-delay-time-min    in s, auto delay min
+    auto-delay-time-max    in s, auto delay max
+    alias-&lt;aliasname&gt;      set user alias
+</code></pre>
+
+<h3>初始化数据库</h3>
+
+<pre><code>$ yiban dbinit
+</code></pre>
+
+<p>将完全删除当前数据库并创建一个空白的数据库</p>
+
+<h3>配置</h3>
+
+<pre><code>$ yiban config &lt;key&gt; &lt;value&gt;
+</code></pre>
+
+<p>将配置 key 设置为 value</p>
+
+<p>可供选择的配置有</p>
+
+<pre><code>master-account         主用户的 用户名
+master-group           主组的 ID，格式为 groupid,puid
+auto-delay-time-min    auto 中，等待时间的下限
+auto-delay-time-max    auto 中，等待时间的上限
+alias-&lt;aliasname&gt;      设置自定义别名
+</code></pre>
+
+<p>要查询当前的配置，运行</p>
+
+<pre><code>$ yiban ls-config
+dbver=1
+master-account=12312341234
+master-group=AAAAAA,BBBBBBBB
+auto-delay-time-min=5
+auto-delay-time-max=10
+</code></pre>
+
+<p>例如，想设置主用户，只需要</p>
+
+<pre><code>$ yiban config master-account &lt;用户名&gt;
+</code></pre>
+
+<blockquote><p>不要修改 dbver 配置，这是一个系统自己维护的配置，自行可能出现问题</p></blockquote>
+
+<h3>用户操作</h3>
+
+<p>添加用户</p>
+
+<pre><code>$ yiban add &lt;用户名&gt; &lt;密码&gt;
+</code></pre>
+
+<p>删除用户</p>
+
+<pre><code>$ yiban del &lt;用户名&gt;
+</code></pre>
+
+<p>修改用户密码</p>
+
+<pre><code>$ yiban chpw &lt;用户名&gt; &lt;新密码&gt;
+</code></pre>
+
+<p>列出用户</p>
+
+<pre><code>$ yiban list
+username|20XX-XX-XX XX:XX:XX|U
+</code></pre>
+
+<p>username: 用户名</p>
+
+<p>20XX-XX-XX XX:XX:XX: 最后登录时间</p>
+
+<p>U: 是否包含 <code>need-update</code> 标记</p>
+
+<blockquote><p>你的版本可能包含额外限制，只能添加固定的用户</p></blockquote>
+
+<h3>登录操作</h3>
+
+<h4>检查当前是否需要登录</h4>
+
+<pre><code>$ yiban test
+</code></pre>
+
+<p>程序会自动检测帐号是否活跃，然后会将失效的用户添加 <code>need-update</code> 标记</p>
+
+<h4>登录一个账户</h4>
+
+<pre><code>$ yiban login &lt;用户名&gt;
+</code></pre>
+
+<h4>登录全部账户</h4>
+
+<pre><code>$ yiban login-all
+</code></pre>
+
+<h4>登录被标记为 need-update 的用户</h4>
+
+<pre><code>$ yiban login-need
+</code></pre>
+
+<h4>手动修改标记</h4>
+
+<pre><code>$ yiban mark &lt;用户名&gt; need-update    # 添加 need-update 标记
+$ yiban mark &lt;用户名&gt; updated        # 删除 need-update 标记
+</code></pre>
+
+<h3>基础 Yiban 协议</h3>
+
+<h4>签到（仅测试，无法回答问题）</h4>
+
+<pre><code>$ yiban checkin &lt;用户名&gt;
+</code></pre>
+
+<h4>列出用户所属的全部组</h4>
+
+<pre><code>$ yiban ls-group &lt;用户名 或 master&gt;
+Group XXXX班: ID: AAAAAA (puid: BBBBBBBB)
+</code></pre>
+
+<p>之后在使用这个组时，组 ID 为 AAAAAA,BBBBBBBB，也可以配置成 master 组</p>
+
+<pre><code>$ yiban config master-group AAAAAA,BBBBBBBB
+</code></pre>
+
+<h4>列出组的全部投票</h4>
+
+<pre><code>$ yiban ls-vote &lt;用户名 或 master&gt; &lt;组ID 或 master&gt; [页码（留空默认为 1）]
+</code></pre>
+
+<p>一个例子</p>
+
+<pre><code>$ yiban ls-vote master master
+AAAAAA,BBBBBBBB,12345671 我们有哪些神反转？  (投票中)
+AAAAAA,BBBBBBBB,12345672 你是如何理解「成长」的？  (投票中)
+AAAAAA,BBBBBBBB,12345673 为什么有些人不学习还能考高分？ (投票中)
+AAAAAA,BBBBBBBB,12345674 你们觉得xxx好吗？  (投票中)
+AAAAAA,BBBBBBBB,12345675 有哪些食堂的饭让你看一眼就知道吃起来很香？  (投票中)
+AAAAAA,BBBBBBBB,12345676 xxxxx  (投票中)
+AAAAAA,BBBBBBBB,12345677 yyyyy  (投票中)
+AAAAAA,BBBBBBBB,12345678 hhhhhhh  (已结束)
+AAAAAA,BBBBBBBB,12345679 xxx  (投票中)
+AAAAAA,BBBBBBBB,12345680 xxx？  (投票中)
+</code></pre>
+
+<blockquote><p>数据已经经过处理</p></blockquote>
+
+<p>最前面的 <code>AAAAAA,BBBBBBBB,12345671</code> 就是投票的 ID</p>
+
+<blockquote><p>后面会介绍一个辅助工具来更方便的操作</p></blockquote>
+
+<h4>显示投票详细信息</h4>
+
+<pre><code>$ yiban cat-vote &lt;用户名 或 master&gt; &lt;投票 ID&gt;
+200 操作成功
+
+有哪些食堂的饭让你看一眼就知道吃起来很香？
+
+
+Min: 2, Max: 5, Number: 6
+act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
+---
+
+84354750 饼
+84354752 面
+84354753 哈哈哈
+84354758 哈哈哈哈哈哈
+84354759 鸡蛋
+84354760 菜
+</code></pre>
+
+<p>Min, Max, Number 分别表示最少投几项，最多投几个，总共有几个</p>
+
+<p>act-voteID 表示投票的有效ID，投票时需要用这个而不是投票 ID</p>
+
+<p>每一项前面的 ID 为选项 ID</p>
+
+<blockquote><p>后面会介绍一个辅助工具来更方便的操作</p></blockquote>
+
+<h4>投票</h4>
+
+<pre><code>$ yiban act-vote &lt;用户名 或 master&gt; &lt;投票的有效ID&gt; &lt;选项,选项,选项...&gt;
+</code></pre>
+
+<p>例如我想给上一个投票投 面 和 鸡蛋，只需要</p>
+
+<pre><code>$ yiban act-vote master AAAAAA,BBBBBBBB,12345675,2,5 84354752,84354759
+</code></pre>
+
+<h4>发表话题</h4>
+
+<pre><code>$ yiban topic &lt;用户名 或 master&gt; &lt;组ID 或 master&gt; &lt;文件名&gt;
+</code></pre>
+
+<p>让用户在指定组发表新话题，话题内容保存在指定文件中，我们提供了一个模板 <code>topic.example</code></p>
+
+<pre><code>A TEST TOPIC FROM CLI
+&lt;p&gt;This is content&lt;/p&gt;
+&lt;pre&gt;This is codes which should be shown by monospace font&lt;/pre&gt;
+&lt;p&gt;An image&lt;/p&gt;
+&lt;img src="https://camo.githubusercontent.com/aa7145f72a5ce89e8618b1060fe57db6dfdd0013/68747470733a2f2f7777772e676f6f676c652e636f6d2f6c6f676f732f646f6f646c65732f323031372f6e65772d79656172732d6576652d323031372d353039333534373834393032333438382d3278612e676966"&gt;&lt;/img&gt;
+</code></pre>
+
+<p>第一行为标题，此处为 <code>A TEST TOPIC FROM CLI</code></p>
+
+<p>后面的内容是话题的内容，需要使用基本的 HTML 语法来写。不要带有 XSS 攻击脚本，否则会被禁止。</p>
+
+<p>如果你不使用 HTML，则内容将无法换行</p>
+
+<h3>自动化</h3>
+
+<p>YibanToolkit 可以将上述过程批量自动化完成，利用 <code>auto</code> 命令</p>
+
+<p>此命令接受几个选项</p>
+
+<ul>
+<li><p><code>-s, --begin-account   &lt;username&gt;</code></p>
+
+<p>  设置此选项后，将从指定的用户开始批量操作，之前的用户被忽略</p></li>
+<li><p><code>-n, --number-account  &lt;num&gt;</code></p>
+
+<p>  设置此选项后，将统计完成的用户个数，超出的用户被忽略</p></li>
+<li><p><code>--override-delay-min  &lt;time&gt;</code></p>
+
+<p>  此选项仅这次 auto-delay-time-min 配置</p></li>
+<li><p><code>--override-delay-max  &lt;time&gt;</code></p>
+
+<p>  此选项仅这次 auto-delay-time-max 配置</p></li>
+<li><p><code>-r, --random</code></p>
+
+<p>  此选项生成一个随机序列，并保存到数据库中，在再次执行此操作之前，序列保持不变</p>
+
+<p>  使用此选项时输入后续参数将被忽略</p></li>
+<li><p><code>--use-order</code></p>
+
+<p>  此选项使用当前保存的随机序列来决定用户的顺序</p></li>
+<li><p><code>--dump-order</code></p>
+
+<p>  此选项倾泻（显示）当前序列决定的用户顺序</p>
+
+<p>  使用此选项时输入后续参数将被忽略</p></li>
+</ul>
+
+
+<h2>ybvotefmt 工具</h2>
+
+<p>未完待续</p>
+
+<h2>ybfirstvote 工具</h2>
+
+<p>未完待续</p>
+</body>
+</html>
