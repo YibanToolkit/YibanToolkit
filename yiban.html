@@ -458,24 +458,24 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 <blockquote><p>目前宏不支持嵌套</p></blockquote>
 
 <ul>
-<li><code>!select{value1:ratio;value2:ratio...}</code></li>
-</ul>
+<li><p><code>!select{value1:ratio;value2:ratio...}</code></p>
 
+<p>  批量操作时，如果希望对不同的用户随机选择，则可以通过此宏设置比例</p>
 
-<p>批量操作时，如果希望对不同的用户随机选择，则可以通过此宏设置比例</p>
+<p>  格式为 <code>内容1:内容1的比例;内容2:内容2的比例;....</code></p>
 
-<p>格式为 <code>内容1:内容1的比例;内容2:内容2的比例;....</code></p>
+<p>  比例是一个整数，并且为了达到最佳性能应该尽可能小</p>
 
 <blockquote><p>并不能保证完全 100% 匹配比例，这里的“比例”越高仅代表程序在作出选择时更倾向于（可能性更大）选择这一项。只有当样本容量足够大时比例才能几乎精确的保证</p>
 
-<p>后面会介绍一个辅助工具来更方便的操作</p></blockquote>
+<p>后面会介绍一个辅助工具来更方便的操作</p></blockquote></li>
+<li><p><code>!alias{aliasname}</code></p>
 
-<ul>
-<li><code>!alias{aliasname}</code></li>
+<p>  选择用户的设置的别名，通过 <code>config</code> 用户可以对任何对象设置别名</p></li>
 </ul>
 
 
-<p>选择用户的设置的别名，通过 <code>config</code> 用户可以对任何对象设置别名</p>
+<p>在使用宏时，为了避免 Shell 对 <code>!</code> 的解释，你应该将宏放置在单引号之间，例如：<code>'!select{84354752,84354759:1;84354757:2}'</code></p>
 
 <p>几个例子</p>
 
