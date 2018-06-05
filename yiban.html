@@ -413,7 +413,12 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 
 <p>YibanToolkit 可以将上述过程批量自动化完成，利用 <code>auto</code> 命令</p>
 
-<p>此命令接受几个选项</p>
+<p>auto 命令的格式如下</p>
+
+<pre><code>$ yiban auto [选项] [&lt;协议名&gt; &lt;参数&gt;]
+</code></pre>
+
+<p>选项，此命令接受几个选项</p>
 
 <ul>
 <li><p><code>-s, --begin-account   &lt;username&gt;</code></p>
@@ -444,14 +449,33 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 </ul>
 
 
-<p>auto 命令的格式如下</p>
-
-<pre><code>$ yiban auto [选项] [&lt;协议名&gt; &lt;参数&gt;]
-</code></pre>
-
 <p>协议名是指你想批量完成的动作，例如 <code>act-vote</code> 投票，任何上述“基础 Yiban 协议”都可以</p>
 
 <p>参数指对应协议的命令的第2个参数及之后的参数，第一个参数用户名由 <code>auto</code> 自己管理</p>
+
+<p>参数中支持宏，目前暂时不支持自定义宏，内置的几个宏为</p>
+
+<blockquote><p>目前宏不支持嵌套</p></blockquote>
+
+<ul>
+<li><code>!select{value1:ratio;value2:ratio...}</code></li>
+</ul>
+
+
+<p>批量操作时，如果希望对不同的用户随机选择，则可以通过此宏设置比例</p>
+
+<p>格式为 <code>内容1:内容1的比例;内容2:内容2的比例;....</code></p>
+
+<blockquote><p>并不能保证完全 100% 匹配比例，这里的“比例”越高仅代表程序在作出选择时更倾向于（可能性更大）选择这一项。只有当样本容量足够大时比例才能几乎精确的保证</p>
+
+<p>后面会介绍一个辅助工具来更方便的操作</p></blockquote>
+
+<ul>
+<li><code>!alias{aliasname}</code></li>
+</ul>
+
+
+<p>选择用户的设置的别名，通过 <code>config</code> 用户可以对任何对象设置别名</p>
 
 <p>几个例子</p>
 
