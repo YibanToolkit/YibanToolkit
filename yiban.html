@@ -511,7 +511,40 @@ act-voteID: AAAAAA,BBBBBBBB,12345675,2,5
 
 <p>几个例子</p>
 
-<p>未完待续</p>
+<p>全部成员，非乱序，完成指定投票，都投同一个回答</p>
+
+<pre><code>$ yiban auto act-vote AAAAAA,BBBBBBBB,12345675,2,5 84354752,84354759
+</code></pre>
+
+<p>全部成员，非乱序，完成指定投票，按照比例选取不同的回答</p>
+
+<pre><code>$ yiban auto act-vote AAAAAA,BBBBBBBB,12345675,2,5 'select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
+</code></pre>
+
+<p>生成随机乱序</p>
+
+<pre><code>$ yiban auto -r
+</code></pre>
+
+<p>全部成员，使用之前生成的乱序，完成指定投票，按照比例选取不同的回答</p>
+
+<pre><code>$ yiban auto --use-order act-vote AAAAAA,BBBBBBBB,12345675,2,5 'select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
+</code></pre>
+
+<p>全部成员，使用之前生成的乱序，从用户 12345699874 开始，只投 10 个人，完成指定投票，按照比例选取不同的回答</p>
+
+<pre><code>$ yiban auto --use-order -s 12345699874 -n 10 act-vote AAAAAA,BBBBBBBB,12345675,2,5 'select{84354752,84354759:1;84354757:2;84354751,84354752,84354759:4}'
+</code></pre>
+
+<p>全部成员，使用之前生成的乱序，在 master 组中发布话题，讨论保存在文件 1.txt 中</p>
+
+<pre><code>$ yiban auto --use-order topic master 1.txt
+</code></pre>
+
+<p>全部成员，使用之前生成的乱序，本次忽略设置，将等待时间临时设置为 5-10s，在 master 组中发布话题，讨论保存在文件 a.txt 和 b.txt 中，并预计发布 a.txt 和 b.txt 话题的人比例为 1:2</p>
+
+<pre><code>$ yiban auto --use-order --override-delay-min 5 --override-delay-max 10 topic master 'select{a.txt:1;b.txt:2}'
+</code></pre>
 
 <h2>ybvotefmt 工具</h2>
 
