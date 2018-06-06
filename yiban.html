@@ -171,29 +171,6 @@ $ . setup_env
 
 <p>非 OS X 用户（其他的 Darwin 发行版本）也可以使用此版本，使用方法参照 Linux 版本。</p>
 
-<h3>Microsoft Windows 版本</h3>
-
-<blockquote><p>请注意，这是一个我们的开发者团队中少数人的业余爱好，此版本不受我们官方支持，它的更新是非常滞后的，并且此版本可能随时被移除。同时这也是非常实验性的，如果你在使用时遇到了任何问题，我们都不会提供任何技术支持。并且我们明确告知：此版本可能包含未知的严重问题，可能给你造成的损害不限于数据丢失、系统损坏。因此在使用之前请务必三思。</p>
-
-<p>Windows 系统缺乏太多 YibanToolkit 正常工作必要的特性，因此此版本中有的功能被删除。</p>
-
-<p>你需要最低 Windows 7 操作系统，并且需要 64 位处理器和 64 位系统才能工作。</p></blockquote>
-
-<p>解压 <code>YibanToolkit-winnt-amd64.zip</code> 后运行 <code>setup_win64.exe</code></p>
-
-<p>为了正常工作，你可能还需要将 Google Chrome 的安装位置添加到系统的 <code>PATH</code> 环境变量中。</p>
-
-<p>Windows 版本目前已知且不会修复的问题</p>
-
-<ol>
-<li><p>安装路径不能带有中文或空格。如果发生请检查。</p></li>
-<li><p>中文输出可能变成乱码。如果发生请使用其他版本或不使用中文。</p></li>
-<li><p>操作系统缺少 <a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/sysconf.html">sysconf _SC_ARG_MAX</a> 特性导致参数长度只能硬编码，有可能在不同的 NT 发行版本下被打破，导致参数超出系统范围。如果发生请使用其他版本。</p></li>
-<li><p>环境变量查找可能会失败。如果发生请使用其他版本。</p></li>
-<li><p>输入法可能导致程序无法工作。如果发生请关闭输入法。</p></li>
-</ol>
-
-
 <h2>用法</h2>
 
 <h3>显示帮助信息</h3>
@@ -670,7 +647,25 @@ AAAAAA,BBBBBBBB,12345675,2,5
 
 <h2>常见问题解答 (FAQ)</h2>
 
-<p>未完待续</p>
+<p>Q: 我使用的版本限制能添加的用户，在我拿到软件的一份副本后应该如何导入许可？</p>
+
+<p>A: 首先你应该创建一个空的数据库，然后使用 <code>ytk-import-license</code> 工具导入许可信息</p>
+
+<pre><code>$ yiban dbinit
+$ ytk-import-license &lt; /path/to/license/file
+</code></pre>
+
+<p>Q: 会有 Microsoft Windows 版本吗</p>
+
+<p>A: Windows 系统缺乏太多 YibanToolkit 正常工作必要的特性，因此虽然我们已经在尝试移植，但绝对不保证是否会推出 Windows 版本</p>
+
+<p>Q: 为什么我的 <code>auto</code> 不能等待</p>
+
+<p>A: 检查你的 <code>auto-delay-time-min</code> 和 <code>auto-delay-time-max</code> 两项配置，新创建的数据库中不存在这两项配置，你应该先进行配置</p>
+
+<p>Q: 我在 XXX Linux 发行版上无法正常使用 YibanToolkit</p>
+
+<p>A: 检查你是否完全安装完了所有依赖的软件。确认后再将你知道的反馈给我们。请注意，YibanToolkit 不能，以后也不会支持 32 位的操作系统（i386, i686 平台等）</p>
 </div>
 </body>
 </html>
