@@ -149,24 +149,50 @@ $ . setup_env
 
 <p><img src="darwin.png" alt="" /></p>
 
-<blockquote><p>Darwin（Mac OS X） 版本是 Beta 版本，软件使用中可能出现各种未知问题，如果你希望使用稳定版本，并获得最新的 hotfix，请使用 Linux 版本</p>
+<blockquote><p>Darwin（Mac OS X） 版本是 Beta 版本，软件使用中可能出现各种未知问题，如果你希望使用稳定版本，请使用 Linux 版本</p>
 
 <p><del>Darwin（Mac OS X） 版本目前有一个已知严重的 json 解析 Bug</del> 此问题应该已经解决（并不需要更新系统库版本），如果再次遇到请反馈</p></blockquote>
 
 <p>在 finder 中解压 <code>YibanToolkit-darwin-amd64.zip</code> 然后将 YibanToolkit 拖入到应用程序目录中，就像安装其他的 OS X 应用程序一样。</p>
 
-<p>必须安装依赖软件，Lanchpad -> 工具 -> 终端，然后运行</p>
+<p>必须安装依赖软件，方法如下</p>
 
-<pre><code>$ pip3 install selenium
-</code></pre>
+<ol>
+<li><p>按照 <a href="https://brew.sh/">https://brew.sh/</a> 上的说明安装 Homebrew，如果已经安装则跳过本步骤</p></li>
+<li><p>打开 Lanchpad -> 其他 -> 终端，然后运行命令</p>
+
+<pre><code class="`"> $ brew install python3 sqlite
+ $ pip3 install selenium
+</code></pre></li>
+</ol>
+
+
+<blockquote><p>并非必须使用 Homebrew，通常你也使用你喜欢的包管理器，例如 MacPorts，不管你用什么，只需要保证上述软件安装到系统。</p></blockquote>
 
 <p>非 OS X 用户（其他的 Darwin 发行版本）也可以使用此版本，使用方法参照 Linux 版本。</p>
 
 <h3>Microsoft Windows 版本</h3>
 
-<p>我们正在移植，但遇到了太多麻烦，Windows 缺乏太多 YibanToolkit 运行必要的特性，并且 Windows 自己本身无数的 Bug 导致 YibanToolkit 难以正常工作。</p>
+<blockquote><p>请注意，这是一个我们的开发者团队中少数人的业余爱好，此版本不受我们官方支持，它的更新是非常滞后的，并且此版本可能随时被移除。同时这也是非常实验性的，如果你在使用时遇到了任何问题，我们都不会提供任何技术支持。并且我们明确告知：此版本可能包含未知的严重问题，可能给你造成的损害不限于数据丢失、系统损坏。因此在使用之前请务必三思。</p>
 
-<p>请注意，这是一个我们的开发者团队中少数人的业余爱好，此版本不受我们官方支持，并且可能随时被移除。</p>
+<p>Windows 系统缺乏太多 YibanToolkit 正常工作必要的特性，因此此版本中有的功能被删除。</p>
+
+<p>你需要最低 Windows 7 操作系统，并且需要 64 位处理器和 64 位系统才能工作。</p></blockquote>
+
+<p>解压 <code>YibanToolkit-winnt-amd64.zip</code> 后运行 <code>setup_win64.exe</code></p>
+
+<p>为了正常工作，你可能还需要将 Google Chrome 的安装位置添加到系统的 <code>PATH</code> 环境变量中。</p>
+
+<p>Windows 版本目前已知且不会修复的问题</p>
+
+<ol>
+<li><p>安装路径不能带有中文或空格。如果发生请检查。</p></li>
+<li><p>中文输出可能变成乱码。如果发生请使用其他版本或不使用中文。</p></li>
+<li><p>操作系统缺少 <a href="http://pubs.opengroup.org/onlinepubs/009695399/functions/sysconf.html">sysconf _SC_ARG_MAX</a> 特性导致参数长度只能硬编码，有可能在不同的 NT 发行版本下被打破，导致参数超出系统范围。如果发生请使用其他版本。</p></li>
+<li><p>环境变量查找可能会失败。如果发生请使用其他版本。</p></li>
+<li><p>输入法可能导致程序无法工作。如果发生请关闭输入法。</p></li>
+</ol>
+
 
 <h2>用法</h2>
 
